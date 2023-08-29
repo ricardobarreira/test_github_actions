@@ -24,11 +24,10 @@ jobs:
       - name: Run Main
         run: |
           python main.py
-          if [ $? -eq 0 ]; then
+          if [ $? -eq 1 ]; then
             echo "MY_ENV_VAR=true" >> $GITHUB_ENV
           fi
 
       - name: Print New Env Variable
         if: env.MY_ENV_VAR == 'true'
-        run: |
-          echo "New MY_ENV_VAR value: ${{ env.MY_ENV_VAR }}"
+        run: echo "New MY_ENV_VAR value: ${{ env.MY_ENV_VAR }}"
