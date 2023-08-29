@@ -1,0 +1,37 @@
+name: Generate Great Expectations Suites and Tag
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      MY_ENV_VAR: 'false'
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v3 
+        with:
+          fetch-depth: 0  # This fetches all history, including tags
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+
+      - name: Run Main
+        run: |
+          python main.py
+
+      - name: Print Env Variable and Modify its Value
+        continue-on-error: true
+        run: |
+          echo $MY_ENV_VAR
+          echo "MY_ENV_VAR=true" >> $GITHUB_ENV
+
+      - name: Print New Env Variable
+        if: env.COMMIT_MADE == 'true'
+        run: |
+          echo $MY_ENV_VAR
