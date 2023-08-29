@@ -28,10 +28,10 @@ jobs:
       - name: Print Env Variable and Modify its Value
         continue-on-error: true
         run: |
-          echo $MY_ENV_VAR
+          echo "Current MY_ENV_VAR value: ${{ env.MY_ENV_VAR }}"
           echo "MY_ENV_VAR=true" >> $GITHUB_ENV
 
       - name: Print New Env Variable
-        if: env.COMMIT_MADE == 'true'
+        if: env.MY_ENV_VAR == 'true'
         run: |
-          echo $MY_ENV_VAR
+          echo "New MY_ENV_VAR value: ${{ env.MY_ENV_VAR }}"
